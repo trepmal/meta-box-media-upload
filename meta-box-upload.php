@@ -37,15 +37,18 @@ class Meta_Box_Media_Upload {
 
 		foreach ( $field_names as $name ) {
 
-			$value = get_post_meta( get_the_id(), $name, true );
+			$value = $rawvalue = get_post_meta( get_the_id(), $name, true );
+
+			$name = esc_attr( $name );
+			$value = esc_attr( $name );
 
 			echo "<input type='hidden' id='$name-value'  class='small-text'       name='meta-box-media[$name]'            value='$value' />";
 			echo "<input type='button' id='$name'        class='button meta-box-upload-button'        value='Upload' />";
 			echo "<input type='button' id='$name-remove' class='button meta-box-upload-button-remove' value='Remove' />";
 
-			$value = ! $value ? '' : wp_get_attachment_image( $value, 'full', false, array('style' => 'max-width:100%;height:auto;') );
+			$image = ! $rawvalue ? '' : wp_get_attachment_image( $rawvalue, 'full', false, array('style' => 'max-width:100%;height:auto;') );
 
-			echo "<div class='image-preview'>$value</div>";
+			echo "<div class='image-preview'>$image</div>";
 
 			echo '<br />';
 
